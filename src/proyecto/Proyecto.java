@@ -11,18 +11,20 @@ public class Proyecto {
     private Scanner teclado = new Scanner(System.in);
     private int codigo;
     private String nombre, seccion;
+    String continuar;
     boolean salir = false; //variable para detectar si el usuario quiere finalizar el programa
     ArrayList<Cursos> curso=new ArrayList<>();
+    int opcion;
     
     //Funcion para mostrar el menu principal
     public void menu(){
         teclado = new Scanner(System.in); //Variable que guarda la respuesta del usuario
           
-        int opcion; //Guardaremos la opcion del usuario
+         //Guardaremos la opcion del usuario
         
         //Mientras el usuario no quiera finalizar el programa
         while (!salir) {
-            System.out.println("Menu Principal");
+            System.out.println("************Menu Principal************");
             System.out.println("1. Registrar Curso");
             System.out.println("2. Ver Registros");
             System.out.println("3. Generar Reporte");
@@ -37,7 +39,7 @@ public class Proyecto {
                     //Nuevo Curso
                     case 1:
                         //Menu nuevo curso
-                        menuNuevoCurso(opcion);
+                        menuNuevoCurso();
                         break;
                     //Ver Registros
                     case 2:
@@ -62,8 +64,8 @@ public class Proyecto {
         }
     }
     
-    //Funcion para el menu de nuevo curso, recibe como parametro la opcion seleccioada por el usaurio
-    public void menuNuevoCurso(int opcion){
+    //Funcion para el menu de nuevo curso
+    public void menuNuevoCurso(){
         System.out.println("*********Nuevo curso***********");
         System.out.println("1. Registrar un solo Curso");
         System.out.println("2. Registrar varios Cursos");
@@ -76,12 +78,11 @@ public class Proyecto {
             switch (opcion) {
                 //Agregar solo un curso
                 case 1:
-                    System.out.println("uno solo");
                     ingresarDatosCurso();
                     break;
                 //Agregar varios cursos
                 case 2:
-                    System.out.println("varios");
+                    
                     ingresarVariosDatos();
                     break;
                 //Regresar al menu pricipal
@@ -98,26 +99,58 @@ public class Proyecto {
     }
     
     public void ingresarDatosCurso(){
-    
-    // Use add() method to add elements in the vector
-    codigo = teclado.nextInt();
-    nombre = teclado.nextLine();
-    seccion = teclado.nextLine();
-    curso.add(new Cursos(codigo,nombre,seccion));
-    
+        System.out.println("*****Registrar un solo Curso******");
+        // Use add() method to add elements in the vector
+        System.out.print("Ingrese el codigo de la clase: ");
+        
+        codigo = teclado.nextInt();
+        teclado.nextLine();
+
+        System.out.print("Ingrese el nombre de la clase: ");
+        nombre = teclado.nextLine();
+
+        System.out.print("Ingrese la seccion de la clase: ");
+        seccion = teclado.nextLine();
+        
+        curso.add(new Cursos(codigo,nombre,seccion));
+        System.out.println("\u001B[32m Se registro el dato correctamente \u001B[0m");
+        
+        System.out.print("¿Deseas registrar otra clase? S/N: ");
+        
+        continuar = teclado.next();
+        if(continuar.equals("S") || continuar.equals("s")){
+            menuNuevoCurso();
+        }
     }
     
     public void ingresarVariosDatos(){
-        
+        System.out.println("*****Registrar varios Cursos******");
+        System.out.println("¿Cuantas clases desa registrar?");
         int num = teclado.nextInt();
         for (int i=0; i<num; i++) {
-            System.out.println("Ingrese producto "+(i+1)+": ");
+            System.out.println("Clase No."+(i+1)+": ");
+            
+            System.out.print("Ingrese el codigo de la clase: ");
             codigo = teclado.nextInt();
             teclado.nextLine();
+            
+            System.out.print("Ingrese el nombre de la clase: ");
             nombre = teclado.nextLine();
+            
+            System.out.print("Ingrese la seccion de la clase: ");
             seccion = teclado.nextLine();
+            
             curso.add(new Cursos(codigo,nombre,seccion));
         }
+        System.out.println("\u001B[32m Se registro el dato correctamente \u001B[0m");
+        
+        System.out.print("¿Deseas registrar otra clase? S/N: ");
+
+        continuar = teclado.next();
+        if(continuar.equals("S") || continuar.equals("s")){
+            menuNuevoCurso();
+        }
+        
     }
     
     public void ordenar() {
