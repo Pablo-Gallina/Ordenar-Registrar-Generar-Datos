@@ -101,8 +101,8 @@ public class Proyecto {
     
     // Use add() method to add elements in the vector
     codigo = teclado.nextInt();
-    nombre = teclado.next();
-    seccion = teclado.next();
+    nombre = teclado.nextLine();
+    seccion = teclado.nextLine();
     curso.add(new Cursos(codigo,nombre,seccion));
     
     }
@@ -110,11 +110,12 @@ public class Proyecto {
     public void ingresarVariosDatos(){
         
         int num = teclado.nextInt();
-        for (int i=0; i<=num; i++) {
+        for (int i=0; i<num; i++) {
             System.out.println("Ingrese producto "+(i+1)+": ");
             codigo = teclado.nextInt();
-            nombre = teclado.next();
-            seccion = teclado.next();
+            teclado.nextLine();
+            nombre = teclado.nextLine();
+            seccion = teclado.nextLine();
             curso.add(new Cursos(codigo,nombre,seccion));
         }
     }
@@ -123,12 +124,20 @@ public class Proyecto {
         for(int i=0;i<curso.size();i++) {
             for(int j=0;j<(curso.size()-1)-i;j++) {
                 if (curso.get(j).getCodigo()>curso.get(j+1).getCodigo()) {
-                    int aux;
-                    aux=curso.get(j).getCodigo();
+                    int newCodigo;
+                    String newNombre, newSeccion;
+                    
+                    newCodigo=curso.get(j).getCodigo();
+                    newNombre=curso.get(j).getNombre();
+                    newSeccion=curso.get(j).getSeccion();
+                    
                     curso.get(j).setCodigo(curso.get(j+1).getCodigo());
                     curso.get(j).setNombre(curso.get(j+1).getNombre());
                     curso.get(j).setSeccion(curso.get(j+1).getSeccion());
-                    curso.get(j+1).setCodigo(aux);
+                    
+                    curso.get(j+1).setCodigo(newCodigo);
+                    curso.get(j+1).setNombre(newNombre);
+                    curso.get(j+1).setSeccion(newSeccion);
                 }
             }
         }
