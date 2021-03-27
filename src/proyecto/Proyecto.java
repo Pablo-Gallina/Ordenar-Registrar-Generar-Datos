@@ -101,9 +101,9 @@ public class Proyecto {
     
     // Use add() method to add elements in the vector
     codigo = teclado.nextInt();
-    //nombre = teclado.next();
-            //seccion = teclado.next();
-            curso.add(new Cursos(codigo,"algo","algo"));
+    nombre = teclado.next();
+    seccion = teclado.next();
+    curso.add(new Cursos(codigo,nombre,seccion));
     
     }
     
@@ -113,9 +113,9 @@ public class Proyecto {
         for (int i=0; i<=num; i++) {
             System.out.println("Ingrese producto "+(i+1)+": ");
             codigo = teclado.nextInt();
-            //nombre = teclado.next();
-            //seccion = teclado.next();
-            curso.add(new Cursos(codigo,"algo","algo"));
+            nombre = teclado.next();
+            seccion = teclado.next();
+            curso.add(new Cursos(codigo,nombre,seccion));
         }
     }
     
@@ -126,6 +126,8 @@ public class Proyecto {
                     int aux;
                     aux=curso.get(j).getCodigo();
                     curso.get(j).setCodigo(curso.get(j+1).getCodigo());
+                    curso.get(j).setNombre(curso.get(j+1).getNombre());
+                    curso.get(j).setSeccion(curso.get(j+1).getSeccion());
                     curso.get(j+1).setCodigo(aux);
                 }
             }
@@ -137,7 +139,7 @@ public class Proyecto {
         
         System.out.println("Sueldos ordenados de menor a mayor.");
         for(int i=0;i<curso.size();i++) {
-            System.out.println(curso.get(i).getCodigo());
+            System.out.println(curso.get(i).getCodigo()+", "+curso.get(i).getNombre()+", "+curso.get(i).getSeccion());
         }
         
         
