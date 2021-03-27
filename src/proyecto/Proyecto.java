@@ -101,9 +101,9 @@ public class Proyecto {
     
     // Use add() method to add elements in the vector
     codigo = teclado.nextInt();
-    nombre = teclado.next();
-    seccion = teclado.next();
-    curso.add(new Cursos(codigo,nombre,seccion));
+    //nombre = teclado.next();
+            //seccion = teclado.next();
+            curso.add(new Cursos(codigo,"algo","algo"));
     
     }
     
@@ -113,42 +113,34 @@ public class Proyecto {
         for (int i=0; i<=num; i++) {
             System.out.println("Ingrese producto "+(i+1)+": ");
             codigo = teclado.nextInt();
-            nombre = teclado.next();
-            seccion = teclado.next();
-            curso.add(new Cursos(codigo,nombre,seccion));
+            //nombre = teclado.next();
+            //seccion = teclado.next();
+            curso.add(new Cursos(codigo,"algo","algo"));
         }
     }
     
+    public void ordenar() {
+        for(int i=0;i<curso.size();i++) {
+            for(int j=0;j<(curso.size()-1)-i;j++) {
+                if (curso.get(j).getCodigo()>curso.get(j+1).getCodigo()) {
+                    int aux;
+                    aux=curso.get(j).getCodigo();
+                    curso.get(j).setCodigo(curso.get(j+1).getCodigo());
+                    curso.get(j+1).setCodigo(aux);
+                }
+            }
+        }
+    }
     
     public void mostrarDatosCurso(){
-  
-        System.out.println("The vector is: " + curso);
+        ordenar();
+        
+        System.out.println("Sueldos ordenados de menor a mayor.");
+        for(int i=0;i<curso.size();i++) {
+            System.out.println(curso.get(i).getCodigo());
+        }
         
         
-        float mayor, menor;
-        int pos, pos1;
-
-        mayor=curso.get(0).getCodigo();
-        menor=curso.get(0).getCodigo();
-        pos=0;
-        pos1=0;
-    
-        for (int i = 1; i <curso.size(); i++) {
-            if (curso.get(i).getCodigo()>mayor) {
-                mayor=curso.get(i).getCodigo();
-                pos=i;
-            }         
-        }
-        System.out.println("El producto mas carro es: "+curso.get(pos).getCodigo());
-        /*
-        for (int i = 1; i <producto.length; i++) {
-            if (precio[i]<menor) {
-                menor=precio[i];
-                pos1=i;
-            }            
-        }
-        System.out.println("El producto mas barato es: "+producto[pos1]);
-        System.out.println("con un precio de Q."+precio[pos1]);*/
     }
     public static void main(String[] args) {
         Proyecto miPrograma = new Proyecto();
