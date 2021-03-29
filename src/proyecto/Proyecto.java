@@ -5,6 +5,11 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 import java.util.InputMismatchException;
 import java.util.ArrayList;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.awt.Desktop;
+
 /**
  *
  * @author GG
@@ -14,7 +19,7 @@ public class Proyecto {
     private int codigo;
     private String nombre, seccion;
     String continuar;
-    boolean salir = false; //variable para detectar si el usuario quiere finalizar el programa
+    boolean salir = false, cargado=false; //variable para detectar si el usuario quiere finalizar el programa
     ArrayList<Cursos> curso=new ArrayList<>();
     int opcion;
     
@@ -53,7 +58,7 @@ public class Proyecto {
                         cargarArchivo();
                     //Filnalizar proceso
                     case 4:
-                        cargarArchivo();
+                        generarReporte();
                     //Filnalizar proceso
                     case 5:
                         salir = true;
@@ -308,6 +313,7 @@ public class Proyecto {
 		//se cierra el ojeto scanner
                 System.out.println("\u001B[32m Se cargo el archivo correctamente \u001B[0m");
 		scanner.close();
+                cargado=true;
 	} catch (FileNotFoundException e) {
             System.err.println("No se encontro el archivo, Introduce una direccion valida");
             System.err.println("Ejemplo: C:\\Users\\YouPC\\Documents\\arhivo.txt ");
@@ -316,13 +322,63 @@ public class Proyecto {
     }
     
     public void cargarArchivo(){
+        if(cargado==true){
+            System.err.println("Atencion, ya has cargado antes un archivo");   
+        }
         System.out.println("**********Cargar Archivo**********");
         String direccion;
+        System.out.println("0. Regresar al menu principal");
         System.out.print("Ingrese la direccion del archivo: ");
+        
         direccion = teclado.next();
-        guardarDatosDelTxt(direccion);
-        menu();
+        
+        if (direccion.equals("0")){
+            menu();
+        } else {
+            guardarDatosDelTxt(direccion);
+            menu();
+        }    
     }
+    
+    //añadir más estudiantes al archivo
+    public void generarReporte() {
+        ordenar();
+        if (!cargado) {
+            System.err.println("No existen datos para generar un reporte");
+            menu();
+        }else{
+            FileWriter flwriter = null;
+            
+            try {
+                flwriter = new FileWriter("C:\\Users\\GG\\Documents\\salida.txt");
+                BufferedWriter bfwriter = new BufferedWriter(flwriter);
+
+                for(int i=0;i<curso.size();i++) {
+                    bfwriter.write(curso.get(i).getCodigo() + "," + curso.get(i).getNombre() + "," + curso.get(i).getSeccion() + "\n");
+                }
+
+                bfwriter.close();
+                System.out.println("Archivo creado satisfactoriamente...");
+                
+                System.out.println("¿Desas abrir el archivo? S/N: ");
+                String preguntame = "";
+                preguntame = teclado.next();
+                if(preguntame.equals("S") || preguntame.equals("s")){
+                    File objetofile = new File ("C:\\Users\\GG\\Documents\\salida.txt");
+                    Desktop.getDesktop().open(objetofile);
+                    menu();
+                }else{
+                    menu();
+                }
+                
+            } catch (IOException e) {
+                e.printStackTrace();
+            } 
+        }
+        
+        
+    }
+    
     public static void main(String[] args) {
         Proyecto miPrograma = new Proyecto();
         miPrograma.menu();
