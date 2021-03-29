@@ -1,5 +1,7 @@
 package proyecto;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.Scanner;
 import java.util.InputMismatchException;
 import java.util.ArrayList;
@@ -27,8 +29,9 @@ public class Proyecto {
             System.out.println("************Menu Principal************");
             System.out.println("1. Registrar Curso");
             System.out.println("2. Ver Registros");
-            System.out.println("3. Generar Reporte");
-            System.out.println("4. Salir");
+            System.out.println("3. Cargar archivo txt");
+            System.out.println("4. Generar Reporte");
+            System.out.println("5. Salir");
             
             try {
                 System.out.println("Seleccione una de las opciones");
@@ -47,10 +50,12 @@ public class Proyecto {
                         break;
                     //Generar Registros
                     case 3:
-                        System.out.println("Generar reporte");
-                        break;
+                        cargarArchivo();
                     //Filnalizar proceso
                     case 4:
+                        cargarArchivo();
+                    //Filnalizar proceso
+                    case 5:
                         salir = true;
                         break;
                     default:
@@ -276,6 +281,47 @@ public class Proyecto {
         }
         
         
+    }
+    
+    public void guardarDatosDelTxt(String direccion){
+        File file = new File(direccion);
+
+	Scanner scanner;
+	try {
+            //se pasa el flujo al objeto scanner
+            scanner = new Scanner(file);
+            while (scanner.hasNextLine()) {
+		// el objeto scanner lee linea a linea desde el archivo
+		String linea = scanner.nextLine();
+		Scanner delimitar = new Scanner(linea);
+		//se usa una expresión regular
+		//que valida que antes o despues de una coma (,) exista cualquier cosa
+		//parte la cadena recibida cada vez que encuentre una coma				
+		delimitar.useDelimiter("\\s*,\\s*");
+                                
+                int codigotxt = Integer.parseInt(delimitar.next());
+                String nombretxt = delimitar.next();
+                String secciontxt = delimitar.next();
+				
+		curso.add(new Cursos(codigotxt,nombretxt,secciontxt));
+		}
+		//se cierra el ojeto scanner
+                System.out.println("\u001B[32m Se cargo el archivo correctamente \u001B[0m");
+		scanner.close();
+	} catch (FileNotFoundException e) {
+            System.err.println("No se encontro el archivo, Introduce una direccion valida");
+            System.err.println("Ejemplo: C:\\Users\\YouPC\\Documents\\arhivo.txt ");
+            cargarArchivo();
+	}
+    }
+    
+    public void cargarArchivo(){
+        System.out.println("**********Cargar Archivo**********");
+        String direccion;
+        System.out.print("Ingrese la direccion del archivo: ");
+        direccion = teclado.next();
+        guardarDatosDelTxt(direccion);
+        menu();
     }
     public static void main(String[] args) {
         Proyecto miPrograma = new Proyecto();
