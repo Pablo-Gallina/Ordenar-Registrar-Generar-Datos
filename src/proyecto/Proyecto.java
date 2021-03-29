@@ -43,7 +43,6 @@ public class Proyecto {
                         break;
                     //Ver Registros
                     case 2:
-                        System.out.println("Ver Registros");
                         mostrarDatosCurso();
                         break;
                     //Generar Registros
@@ -101,16 +100,35 @@ public class Proyecto {
     public void ingresarDatosCurso(){
         System.out.println("*****Registrar un solo Curso******");
         // Use add() method to add elements in the vector
-        System.out.print("Ingrese el codigo de la clase: ");
         
-        codigo = teclado.nextInt();
-        teclado.nextLine();
-
-        System.out.print("Ingrese el nombre de la clase: ");
-        nombre = teclado.nextLine();
-
-        System.out.print("Ingrese la seccion de la clase: ");
-        seccion = teclado.nextLine();
+        try {
+            System.out.print("Ingrese el codigo de la clase: ");
+        
+            codigo = teclado.nextInt();
+            teclado.nextLine();
+        } catch (Exception e) {
+            System.err.print("El codigo debe de ser tipo numero: ");
+        
+            codigo = teclado.nextInt();
+            teclado.nextLine();
+        }
+       
+        try {
+            System.out.print("Ingrese el nombre de la clase: ");
+            
+        } catch (Exception e) {
+            System.err.println("Ingrese un dato valido:");
+            nombre = teclado.nextLine();
+        }
+        
+        try {
+            System.out.print("Ingrese la seccion de la clase: ");
+            seccion = teclado.nextLine();
+        } catch (Exception e) {
+            System.err.print("Ingrese un dato valido: ");
+            seccion = teclado.nextLine();
+        }
+        
         
         curso.add(new Cursos(codigo,nombre,seccion));
         System.out.println("\u001B[32m Se registro el dato correctamente \u001B[0m");
@@ -130,15 +148,33 @@ public class Proyecto {
         for (int i=0; i<num; i++) {
             System.out.println("Clase No."+(i+1)+": ");
             
+            try {
             System.out.print("Ingrese el codigo de la clase: ");
+        
             codigo = teclado.nextInt();
             teclado.nextLine();
-            
-            System.out.print("Ingrese el nombre de la clase: ");
-            nombre = teclado.nextLine();
-            
-            System.out.print("Ingrese la seccion de la clase: ");
-            seccion = teclado.nextLine();
+            } catch (Exception e) {
+                System.err.print("El codigo debe de ser tipo numero: ");
+
+                codigo = teclado.nextInt();
+                teclado.nextLine();
+            }
+
+            try {
+                System.out.print("Ingrese el nombre de la clase: ");
+
+            } catch (Exception e) {
+                System.err.println("Ingrese un dato valido:");
+                nombre = teclado.nextLine();
+            }
+
+            try {
+                System.out.print("Ingrese la seccion de la clase: ");
+                seccion = teclado.nextLine();
+            } catch (Exception e) {
+                System.err.print("Ingrese un dato valido: ");
+                seccion = teclado.nextLine();
+            }
             
             curso.add(new Cursos(codigo,nombre,seccion));
         }
@@ -176,12 +212,101 @@ public class Proyecto {
         }
     }
     
+    public void verTodo(){
+        System.out.println("Datos ordenados de menor a mayor segun su codigo");
+        
+        for(int i=0;i<curso.size();i++) {
+            System.out.println(curso.get(i).getCodigo()+", "+curso.get(i).getNombre()+", "+curso.get(i).getSeccion());
+        }
+        System.out.print("¿Deseas ver otro registro? S/N: ");
+        
+        continuar = teclado.next();
+        if(continuar.equals("S") || continuar.equals("s")){
+            mostrarDatosCurso();
+        }
+    }
+    
+    public void buscarCurso(){
+        
+        try {
+            System.out.println("Ingrese el codigo del curso: ");
+            opcion = teclado.nextInt(); //Opcion seleccionada por el usuario
+            
+            for(int i=0;i<curso.size();i++) {
+                if(curso.get(i).getCodigo().equals(opcion)){
+                   System.out.println(curso.get(i).getCodigo()+", "+curso.get(i).getNombre()+", "+curso.get(i).getSeccion()); 
+                }else
+                    System.err.println("No se encontraron considencias");
+            }
+            
+            System.out.print("¿Deseas buscar otro registro? S/N: ");
+        
+            continuar = teclado.next();
+            if(continuar.equals("S") || continuar.equals("s")){
+                buscarCurso();
+            }
+            
+        } catch (InputMismatchException e) {
+            System.err.println("Debes insertar solo un número");
+            teclado.next();
+        }
+        
+    }
+    
     public void mostrarDatosCurso(){
         ordenar();
         
-        System.out.println("Sueldos ordenados de menor a mayor.");
-        for(int i=0;i<curso.size();i++) {
-            System.out.println(curso.get(i).getCodigo()+", "+curso.get(i).getNombre()+", "+curso.get(i).getSeccion());
+        if(curso.isEmpty()){
+            System.err.println("No existen registros guardados, porfavor registre al menos un dato");
+            System.out.println("1. Registrar Curso");
+            System.out.println("2. Regresar al menu principal");
+            try {
+                System.out.println("Seleccione una de las opciones");
+                opcion = teclado.nextInt(); //Opcion seleccionada por el usuario
+                    //Casos segun el usario seleccione
+                switch (opcion) {
+                    //Agregar curso
+                    case 1:
+                        menuNuevoCurso();
+                        break;
+                    //Regresar al menu pricipal
+                    case 2:
+
+                        menu();
+                        break;
+                    default:
+                        System.err.println("Seleccione una opcion valida");
+                    }
+            } catch (InputMismatchException e) {
+                System.err.println("Debes insertar solo un número");
+                teclado.next();
+            }
+            
+        } else{
+            System.out.println("***********Ver Registros***********");
+            System.out.println("1. Ver todos los cursos");
+            System.out.println("2. Buscar curso por codigo");
+            try {
+                System.out.println("Seleccione una de las opciones");
+                opcion = teclado.nextInt(); //Opcion seleccionada por el usuario
+                    //Casos segun el usario seleccione
+                switch (opcion) {
+                    //Agregar curso
+                    case 1:
+                        verTodo();
+                        break;
+                    //Regresar al menu pricipal
+                    case 2:
+                        buscarCurso();
+                        break;
+                    default:
+                        System.err.println("Seleccione una opcion valida");
+                    }
+            } catch (InputMismatchException e) {
+                System.err.println("Debes insertar solo un número");
+                teclado.next();
+            }
+            
         }
         
         
