@@ -190,7 +190,7 @@ public class Proyecto {
     }
     
     public void buscarCurso(){
-        
+        int encontrado = 0;
         try {
             System.out.println("Ingrese el codigo del curso: ");
             opcion = teclado.nextInt(); //Opcion seleccionada por el usuario
@@ -198,10 +198,13 @@ public class Proyecto {
             for(int i=0;i<curso.size();i++) {
                 if(curso.get(i).getCodigo().equals(opcion)){
                    System.out.println(curso.get(i).getCodigo()+", "+curso.get(i).getNombre()+", "+curso.get(i).getSeccion()); 
-                }else
-                    System.err.println("No se encontraron considencias");
+                   encontrado=1;
+                }   
             }
             
+            if(encontrado==0){
+                System.err.println("No se encotraron concidencias");
+            }
             System.out.print("¿Deseas buscar otro registro? S/N: ");
         
             continuar = teclado.next();
