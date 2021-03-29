@@ -100,35 +100,16 @@ public class Proyecto {
     public void ingresarDatosCurso(){
         System.out.println("*****Registrar un solo Curso******");
         // Use add() method to add elements in the vector
+        System.out.print("Ingrese el codigo de la clase: ");
         
-        try {
-            System.out.print("Ingrese el codigo de la clase: ");
-        
-            codigo = teclado.nextInt();
-            teclado.nextLine();
-        } catch (Exception e) {
-            System.err.print("El codigo debe de ser tipo numero: ");
-        
-            codigo = teclado.nextInt();
-            teclado.nextLine();
-        }
-       
-        try {
-            System.out.print("Ingrese el nombre de la clase: ");
-            
-        } catch (Exception e) {
-            System.err.println("Ingrese un dato valido:");
-            nombre = teclado.nextLine();
-        }
-        
-        try {
-            System.out.print("Ingrese la seccion de la clase: ");
-            seccion = teclado.nextLine();
-        } catch (Exception e) {
-            System.err.print("Ingrese un dato valido: ");
-            seccion = teclado.nextLine();
-        }
-        
+        codigo = teclado.nextInt();
+        teclado.nextLine();
+
+        System.out.print("Ingrese el nombre de la clase: ");
+        nombre = teclado.nextLine();
+
+        System.out.print("Ingrese la seccion de la clase: ");
+        seccion = teclado.nextLine();
         
         curso.add(new Cursos(codigo,nombre,seccion));
         System.out.println("\u001B[32m Se registro el dato correctamente \u001B[0m");
@@ -148,33 +129,15 @@ public class Proyecto {
         for (int i=0; i<num; i++) {
             System.out.println("Clase No."+(i+1)+": ");
             
-            try {
             System.out.print("Ingrese el codigo de la clase: ");
-        
             codigo = teclado.nextInt();
             teclado.nextLine();
-            } catch (Exception e) {
-                System.err.print("El codigo debe de ser tipo numero: ");
-
-                codigo = teclado.nextInt();
-                teclado.nextLine();
-            }
-
-            try {
-                System.out.print("Ingrese el nombre de la clase: ");
-
-            } catch (Exception e) {
-                System.err.println("Ingrese un dato valido:");
-                nombre = teclado.nextLine();
-            }
-
-            try {
-                System.out.print("Ingrese la seccion de la clase: ");
-                seccion = teclado.nextLine();
-            } catch (Exception e) {
-                System.err.print("Ingrese un dato valido: ");
-                seccion = teclado.nextLine();
-            }
+            
+            System.out.print("Ingrese el nombre de la clase: ");
+            nombre = teclado.nextLine();
+            
+            System.out.print("Ingrese la seccion de la clase: ");
+            seccion = teclado.nextLine();
             
             curso.add(new Cursos(codigo,nombre,seccion));
         }
